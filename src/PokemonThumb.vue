@@ -1,0 +1,54 @@
+<template>
+<div class="type" :class="type">
+  <div>
+    <small>#0{{id}}</small>
+  </div>
+  <img :src="image" :alt="name" />
+  <div>
+    <h3>{{name}}</h3>
+    <small>Type: {{type}}</small>
+  </div>
+</div>
+</template>
+
+<style>
+body{
+  text-align: center;
+  background-color: #F9F9F9;
+}
+
+.all-container{
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.type{
+  text-align: center;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 10%), 0 1px 3px 0 rgb(0 0 0 / 8%);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 30px;
+}
+
+.grass{
+  background-color: rgb(32, 168, 0);
+}
+
+.fire{
+  background-color: rgb(226, 34, 0);
+}
+
+.water{
+  background-color: rgb(0, 158, 226);
+}
+
+.bug{
+  background-color: rgb(181, 114, 0);
+}
+</style>
+
+<script>
+export default {
+  props: ['id', 'image', 'name', 'type']
+}
+</script>

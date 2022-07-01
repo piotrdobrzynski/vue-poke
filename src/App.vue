@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Pokemon Evolution</h1>
+
+    <PokemonThumb v-for="(pokemon, idx) in allPokemons" :key="idx" :id="pokemon.id" :name="pokemon.name" :image="pokemon.sprites.other.dream_world.front_default" :type="pokemon.types[0].type.name"/>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {reactive} from "vue";
+import PokemonThumb from "./PokemonThumb.vue";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    PokemonThumb
+  },
+  setup(){
+    const state = reactive({
+      allPokemons: []
+    })
+
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=500')
+    .then((res) => res.json())
+    .then((data) => {
+        data.results.forEach( async pokemon => {
+          const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+          const data =  await res.json()
+          state.allPokemons.push(data)
+          await state.allPokemons.sort((a, b) => a.id - b.id)
+        })
+    })
+    return state
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
